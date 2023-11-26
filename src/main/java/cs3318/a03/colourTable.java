@@ -6,6 +6,11 @@ public class colourTable {
     final int paletteSize;
     final ArrayList<int[]> palette;
 
+    public colourTable(){
+        this.paletteSize=0;
+        throw new IllegalArgumentException("Invalid palette size");
+    }
+
     public colourTable(int size) {
         if (isValidPaletteSize(size)) {
             this.paletteSize = size;

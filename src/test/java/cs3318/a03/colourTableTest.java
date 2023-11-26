@@ -28,4 +28,12 @@ public class colourTableTest {
                 "Invalid palette size");
     }
 
+    @Test
+    public void noPaletteSizeTest(){
+        Executable colourTableConstructor = () -> new colourTable();
+        assertThrows(IllegalArgumentException.class, colourTableConstructor,
+                "Invalid Amount");
+    }
+
+
 }
