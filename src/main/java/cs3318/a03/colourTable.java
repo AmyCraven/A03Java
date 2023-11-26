@@ -1,6 +1,7 @@
 package cs3318.a03;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class colourTable {
@@ -33,6 +34,10 @@ public class colourTable {
         validateRGBValues(red, green, blue);
         int[] RGBValue = {red, green, blue};
 
+        if (isDuplicateRGB(RGBValue)) {
+            throw new IllegalArgumentException("Duplicate RGB values are not allowed in the palette.");
+        }
+
         palette.add(RGBValue);
     }
 
@@ -40,6 +45,15 @@ public class colourTable {
         if (red > 255 || red < 0 || green > 255 || green < 0 || blue > 255 || blue < 0) {
             throw new IllegalArgumentException("Invalid RGB values");
         }
+    }
+
+    private boolean isDuplicateRGB(int[] rgbValue) {
+        for (int[] existingRGB : palette) {
+            if (Arrays.equals(existingRGB, rgbValue)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public List<int[]> getPalette() {

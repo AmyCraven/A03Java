@@ -43,7 +43,7 @@ public class colourTableTest {
     private colourTable fullPalette;
     @BeforeEach
     public void setUp() {
-        testPalette = new colourTable(4);
+        testPalette = new colourTable(20);
         fullPalette = new colourTable(2);
         fullPalette.addToPalette(1,2,3);
         fullPalette.addToPalette(2,3,4);
@@ -71,6 +71,33 @@ public class colourTableTest {
                 Arguments.of(0, 255, 0),    // Green
                 Arguments.of(0, 0, 255)    // Blue
         );
+    }
+
+    @ParameterizedTest
+    @MethodSource("invalidRgbValuesProvider")
+    public void addingInvalidRGBValuesThrowsException(int red, int green, int blue) {
+
+        Executable addToPaletteExecutable = () -> testPalette.addToPalette(red, green, blue);
+
+        assertThrows(IllegalArgumentException.class, addToPaletteExecutable,
+                "Adding invalid RGB values should throw an exception");
+    }
+
+    private static Stream<Arguments> invalidRgbValuesProvider() {
+        return Stream.of(
+                Arguments.of(-1, 0, 0),
+                Arguments.of(256, 0, 0),
+                Arguments.of(0, -1, 0),
+                Arguments.of(0, 256, 0)
+        );
+    }
+
+    @Test
+    public void rejectingAddingDuplicateTest(){
+        colourTable dupTestTable = new colourTable(2);
+        dupTestTable.addToPalette(1,2,3);
+        Executable addDuplicateColour = () -> dupTestTable.addToPalette(1,2,3);
+        assertThrows(IllegalArgumentException.class, addDuplicateColour,"Duplicate RGB values are not allowed in the palette.");
     }
 
 }
