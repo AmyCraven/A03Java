@@ -1,6 +1,7 @@
 package cs3318.a03;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class colourTable {
     final int paletteSize;
@@ -22,6 +23,27 @@ public class colourTable {
 
     boolean isValidPaletteSize(int size) {
         return size > 1 && size < 1025 && size % 2 == 0;
+    }
+
+    public void addToPalette(int red, int green, int blue) {
+        if (palette.size() >= paletteSize) {
+            throw new IllegalStateException("Palette is at its capacity, cannot add more colors.");
+        }
+
+        validateRGBValues(red, green, blue);
+        int[] RGBValue = {red, green, blue};
+
+        palette.add(RGBValue);
+    }
+
+    private void validateRGBValues(int red, int green, int blue) {
+        if (red > 255 || red < 0 || green > 255 || green < 0 || blue > 255 || blue < 0) {
+            throw new IllegalArgumentException("Invalid RGB values");
+        }
+    }
+
+    public List<int[]> getPalette() {
+        return new ArrayList<>(palette);
     }
 
 
